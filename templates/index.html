@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block title %}Twitter画像収集スクリプト{% endblock %}
+
+
+{% block contents %}
+
+
+<h1>Twitter画像収集スクリプト</h1>
+
+{% for message in get_flashed_messages() %}
+    {{ message }}
+{% endfor %}
+
+<div class="loading"></div>
+
+<form action="{{ url_for("pro_getPics") }}" method="POST">
+  <fieldset>
+      <legend>ユーザー名</legend>
+      <input type="text" name="user_id" required>
+      <button type="submit">画像収集</button>
+  </fieldset>
+</form>
+
+{% endblock %}

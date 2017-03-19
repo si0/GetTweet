@@ -21,7 +21,7 @@ def getPics(user_id):
         count = api.get_user(user_id).statuses_count - 1
     except tweepy.error.TweepError:
         print("ユーザーが存在しません。")
-        exit()
+        return "exists_user"
 
     # 保存先フォルダがない場合は作成
     if not os.path.isdir("./img"):
@@ -81,6 +81,7 @@ def getPics(user_id):
         print("ツイートページ: " + str(tweet_page))
         print("ツイートカウント: " + str(tweet_count))
         print("ツイート総数: " + str(count))
+        return "error"
 
 
 def download(media_url, user_id, file_name):
