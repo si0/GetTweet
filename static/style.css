@@ -1,0 +1,36 @@
+html, body, .container {
+  height: 100%;
+  font-family: 'arial narrow';
+}
+
+.contents {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: 400px;
+  height: 200px;
+}
+
+.main_form {
+  text-align: center;
+}
+
+.userid_input {
+  width: 400px;
+  padding: 4px;
+  font-size: 18px;
+}
+
+.description {
+  color: #ccc;
+}
+
+.userid_submit {
+  padding: 10px 20px;
+  background: white;
+  border: 1px solid #ccc;
+  color: #ccc;
+}

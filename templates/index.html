@@ -6,21 +6,19 @@
 
 {% block contents %}
 
+<div class="container">
 
-<h1>Twitter画像収集スクリプト</h1>
+  <div class="contents">
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+    {% endfor %}
 
-{% for message in get_flashed_messages() %}
-    {{ message }}
-{% endfor %}
-
-<div class="loading"></div>
-
-<form action="{{ url_for("pro_getPics") }}" method="POST">
-  <fieldset>
-      <legend>ユーザー名</legend>
-      <input type="text" name="user_id" required>
-      <button type="submit">画像収集</button>
-  </fieldset>
-</form>
+    <p class="description">USER ID</p>
+    <form class="main_form" action="{{ url_for("pro_getPics") }}" method="POST">
+      <p><input type="text" class="userid_input "name="user_id" required></p>
+      <p><button class="userid_submit" type="submit">画像収集</button></p>
+    </form>
+  </div>
+</div>
 
 {% endblock %}
