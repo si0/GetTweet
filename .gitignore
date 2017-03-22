@@ -1,5 +1,6 @@
 # 保存された画像
 img/
+static/zip/
 
 # コンフィグファイル
 config.py

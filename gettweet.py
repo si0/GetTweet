@@ -4,6 +4,9 @@ import config
 import os
 import requests
 import re
+import zipfile
+import shutil
+import time
 
 
 # twitterdevelopertool認証
@@ -31,11 +34,12 @@ def getPics(user_id):
         return "error"
 
     # 保存先フォルダがない場合は作成
-    if not os.path.isdir("./img"):
-        os.mkdir("img")
-    if not os.path.isdir("./img/" + user_id):
-        os.mkdir("img/" + user_id)
+    if not os.path.isdir("./static/zip"):
+        os.mkdir("static/zip")
+    if not os.path.isdir("./static/zip/" + user_id):
+        os.mkdir("static/zip/" + user_id)
 
+    file_list = [] # ファイル名のリスト
     file_number = 1 # ファイル名のカウント
 
     for result in tweepy.Cursor(api.user_timeline, id=user_id).items():
@@ -59,8 +63,14 @@ def getPics(user_id):
                 # ファイル名の設定
                 file_name = user_id + "_" + str(file_number) + extension
                 file_number += 1
+                # ファイル名をリストへ追加
+                file_list.append(file_name)
                 # 画像の保存
                 download(media_url, user_id, file_name)
+
+    # zip圧縮する
+    zip_result = getZip(file_list, user_id)
+    return zip_result
 
 
 def getTweet(user_id, keyword_arg):
@@ -99,9 +109,25 @@ def download(media_url, user_id, file_name):
     # URL先に画像があることを確認
     if res.status_code == 200:
         # 画像の保存
-        with open("./img/" + user_id + "/" + file_name, 'wb') as f:
+        with open("./static/zip/" + user_id + "/" + file_name, 'wb') as f:
             media = urlopen(media_url)
             f.write(media.read())
             f.close()
     else:
         return None
+
+
+def getZip(file_list, user_id):
+    try:
+        # zipファイルの作成先を指定
+        zipfile_path = "static/zip/%s.zip" % user_id
+        # zip圧縮をする
+        with zipfile.ZipFile(zipfile_path, "w", zipfile.ZIP_DEFLATED) as zip:
+            for file in file_list:
+                zip.write("static/zip/%s/%s" % (user_id, file))
+        # 保存済み元画像を削除する
+        shutil.rmtree("static/zip/%s" % user_id)
+        return "zip_success"
+
+    except:
+        return "error"

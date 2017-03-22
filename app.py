@@ -51,17 +51,22 @@ def pro_getPics():
             # 画像を収集する
             result = getPics(user_id)
 
-            # 何かしらのエラー発生時
+            # zip圧縮が成功した場合は画像をダウンロードできるようにする
+            if result == "zip_success":
+                # zipのパスを取得する
+                zip_path = "./zip/%s.zip" % user_id
+                return render_template("index.html", zip_path = zip_path)
+
+            # [エラー]ユーザーが存在しない場合
             if result == "exists_user":
                 flash("存在しないユーザーIDです")
-                return redirect(url_for("show_index"))
 
+            # [エラー]何かしらのエラー
             elif result == "error":
                 flash("エラーが発生しました")
-                return redirect(url_for("show_index"))
 
     return redirect(url_for("show_index"))
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(threaded=True)

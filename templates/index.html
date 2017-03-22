@@ -7,7 +7,6 @@
 {% block contents %}
 
 <div class="container">
-
   <div class="contents">
     {% for message in get_flashed_messages() %}
         {{ message }}
@@ -16,7 +15,12 @@
     <p class="description">USER ID</p>
     <form class="main_form" action="{{ url_for("pro_getPics") }}" method="POST">
       <p><input type="text" class="userid_input "name="user_id" required></p>
-      <p><button class="userid_submit" type="submit">画像収集</button></p>
+      <p>
+        <button class="userid_submit" type="submit">画像収集</button>
+        {% if zip_path %}
+          <a href="{{ url_for("static", filename=zip_path) }}"><button class="userid_submit" type="button">ダウンロード</button></a>
+        {% endif %}
+      </p>
     </form>
   </div>
 </div>
