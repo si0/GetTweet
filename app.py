@@ -1,7 +1,8 @@
 from flask import Flask, request, render_template, flash, redirect, url_for
-from gettweetpics import getPics
+from gettweet import getPics
 import config
 import os
+
 
 # Configurations
 DEBUG = config.flask_config["DEBUG"]
@@ -10,6 +11,7 @@ SECRET_KEY = config.flask_config["SECRET_KEY"]
 # Flaskオブジェクト
 app = Flask(__name__)
 app.config.from_object(__name__)
+
 
 # キャッシュバスター
 @app.context_processor
